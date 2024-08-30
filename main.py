@@ -6,6 +6,7 @@ data_file_path = "password_manager.txt"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def get_data_add():
     """
