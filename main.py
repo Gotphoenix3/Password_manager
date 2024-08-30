@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 font = ("Arial", 12)
 data_file_path = "password_manager.txt"
@@ -18,22 +19,20 @@ def get_data_add():
     user_website = website_entry.get()
     user_email = email_entry.get()
     user_password = password_entry.get()
-    # Count the existing entries in the file
-    try:
-        with open(data_file_path, "r") as file:
-            lines = file.readlines()
-            # Extract numbers from lines to find the highest number
-            numbers = [int(line.split('Data_')[1].split(' ')[0]) for line in lines if 'Data_' in line]
-            next_number = max(numbers, default=0) + 1
-    except FileNotFoundError:
-        next_number = 1
-    # Appending the data from the window to the password_manager file
-    with open(data_file_path, "a") as file:
-        file.write(f"Data-{next_number} = {{\n")
-        file.write(f"   Website: {user_website},\n")
-        file.write(f"   Email/User: {user_email},\n")
-        file.write(f"   Password: {user_password},\n")
-        file.write("}\n")
+    if user_website == "" or user_email == "" or user_password == "":
+        messagebox.showerror(title="Error", message="Please fill all the camps :c")
+    else:
+        # Pop up message when clicking the Add button.
+        valid_answer = messagebox.askokcancel(title=user_website, message=f"These are the details entered:"
+                                                                          f" \nEmail: {user_email} \n"
+                                                                          f"Password: {user_password} \n"
+                                                                          f"Is it okay to save?")
+        if valid_answer:
+            with open(data_file_path, "a") as file:
+                file.write(f"{user_website.title()} data = {{\n")
+                file.write(f"   Email/User: {user_email},\n")
+                file.write(f"   Password: {user_password},\n")
+                file.write("}\n")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -77,6 +76,5 @@ email_entry.grid(column=1, row=2, columnspan=2, padx=var_pad_x, pady=var_pad_y)
 password_entry.grid(column=1, row=3, padx=var_pad_x, pady=var_pad_y)
 generate_button.grid(column=2, row=3, padx=var_pad_x, pady=var_pad_y)
 add_button.grid(column=1, row=4, columnspan=2, padx=var_pad_x, pady=var_pad_y)
-
 
 window.mainloop()
