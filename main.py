@@ -17,8 +17,18 @@ def get_data_add():
     user_website = website_entry.get()
     user_email = email_entry.get()
     user_password = password_entry.get()
+    # Count the existing entries in the file
+    try:
+        with open(data_file_path, "r") as file:
+            lines = file.readlines()
+            # Extract numbers from lines to find the highest number
+            numbers = [int(line.split('Data_')[1].split(' ')[0]) for line in lines if 'Data_' in line]
+            next_number = max(numbers, default=0) + 1
+    except FileNotFoundError:
+        next_number = 1
+    # Appending the data from the window to the password_manager file
     with open(data_file_path, "a") as file:
-        file.write("Data = {\n")
+        file.write(f"Data-{next_number} = {{\n")
         file.write(f"   Website: {user_website},\n")
         file.write(f"   Email/User: {user_email},\n")
         file.write(f"   Password: {user_password},\n")
