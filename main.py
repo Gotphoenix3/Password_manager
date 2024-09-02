@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
+import json
 
 font = ("Arial", 12)
 data_file_path = "password_manager.txt"
@@ -45,21 +46,38 @@ def get_data_add():
     user_website = website_entry.get()
     user_email = email_entry.get()
     user_password = password_entry.get()
+    new_data = {
+        user_website: {
+            "email": user_email,
+            "password": user_password,
+        }
+    }
     # We validate the user input, if there is empty spaces then pop up an error message
     if user_website == "" or user_email == "" or user_password == "":
         messagebox.showerror(title="Error", message="Please fill all the camps :c")
     else:
         # Pop up message when clicking the Add button.
-        valid_answer = messagebox.askokcancel(title=user_website, message=f"These are the details entered:"
-                                                                          f" \nEmail: {user_email} \n"
-                                                                          f"Password: {user_password} \n"
-                                                                          f"Is it okay to save?")
-        if valid_answer:
-            with open(data_file_path, "a") as file:
-                file.write(f"{user_website.title()} data = {{\n")
-                file.write(f"   Email/User: {user_email},\n")
-                file.write(f"   Password: {user_password},\n")
-                file.write("}\n")
+        # valid_answer = messagebox.askokcancel(title=user_website, message=f"These are the details entered:"
+        #                                                                   f" \nEmail: {user_email} \n"
+        #                                                                   f"Password: {user_password} \n"
+        #                                                                   f"Is it okay to save?")
+        # if valid_answer:
+        with open("data.json", "r") as file:
+            # Reading old data
+            data_json = json.load(file)
+            # Updating the old data with new data
+            data_json.update(new_data)
+        with open("data.json", "w") as file:
+            # Saving updating data
+            json.dump(data_json, file, indent=4)
+
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
+            # This was the original formatting of the data.txt file
+            # file.write(f"{user_website.title()} data = {{\n")
+            # file.write(f"   Email/User: {user_email},\n")
+            # file.write(f"   Password: {user_password},\n")
+            # file.write("}\n")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
