@@ -8,8 +8,13 @@ data_file_path = "password_manager.txt"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
+    """
+    Allows to create a random password for the user assigned to the 'generate password' button
+    """
     # Password Generator Project
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+               'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+               'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
@@ -22,12 +27,12 @@ def generate_password():
     password = "".join(password_list)
     password_entry.insert(0, password)
 
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def get_data_add():
     """
     This function allows us to use the ADD button to append new website, email and password to
     the data.txt file in a JSON style
-    :return:
     """
     # We get the user entries at the time of clicking in add
     user_website = website_entry.get()
