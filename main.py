@@ -22,9 +22,13 @@ def generate_password():
     password_numbers = [choice(numbers) for _ in range(randint(2, 4))]
     password_symbols = [choice(symbols) for _ in range(randint(2, 4))]
 
+    password_entry.insert(0, "")
     password_list = password_letters + password_numbers + password_symbols
     shuffle(password_list)
+    # Here we create the final password string and copy to the GUI
     password = "".join(password_list)
+    # Update the password so each time we click 'generate password' it does not append to the generated before
+    password_entry.delete(0, 'end')
     password_entry.insert(0, password)
 
 
