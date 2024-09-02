@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
+import pyperclip
 
 font = ("Arial", 12)
 data_file_path = "password_manager.txt"
@@ -30,6 +31,8 @@ def generate_password():
     # Update the password so each time we click 'generate password' it does not append to the generated before
     password_entry.delete(0, 'end')
     password_entry.insert(0, password)
+    # Making the password be copied to the clipboard
+    pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
